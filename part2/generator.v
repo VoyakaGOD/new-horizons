@@ -7,24 +7,23 @@ module generator
 
 reg[2:0] counter;
 
-initial counter = 3'b000;
-initial signal = 0;
-
-always @(negedge clk)
+always @(posedge clk)
 begin
-    signal = 0;
     if (reset)
     begin
-        counter = 3'b000;
+        counter <= 3'b000;
+        signal <= 0;
     end
-    else if(counter < 4)
+    else if(~counter[2]) //counter less than 4
     begin
-        counter = counter + 1;
+        if (~counter) //counter equals 0
+            signal <= 0;
+        counter <= counter + 1;
     end
     else
     begin
-        counter = 3'b000;
-        signal = 1'b1;
+        counter <= 3'b000;
+        signal <= 1;
     end
 end
 

@@ -12,8 +12,13 @@ clockDivider target
     .clk_div6(result)
 );
 
-initial clk = 0;
-initial reset = 0;
+initial
+begin
+    clk = 0;
+    reset = 1;
+    #5 reset = 0;
+end
+
 always #1 clk = ~clk;
 
 endmodule

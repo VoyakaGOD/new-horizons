@@ -5,30 +5,23 @@ module clockDivider
     output  reg  clk_div6
 );
 
-reg[2:0] counter;
-
-initial counter = 3'b000;
-initial clk_div6 = 0;
-
-always @(negedge clk)
-begin
-    clk_div6 = 0;
-end
+reg[1:0] counter;
 
 always @(posedge clk)
 begin
     if (reset)
     begin
-        counter = 3'b000;
+        counter <= 2'b00;
+        clk_div6 <= 0;
     end
-    else if(counter < 5)
+    else if(~counter[1]) //counter less than 2
     begin
-        counter = counter + 1;
+        counter <= counter + 1;
     end
     else
     begin
-        counter = 3'b000;
-        clk_div6 = 1;
+        counter <= 2'b00;
+        clk_div6 <= ~clk_div6;
     end
 end
 
