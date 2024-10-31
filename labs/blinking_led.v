@@ -23,7 +23,7 @@ begin
 end
 
 assign update = (~update_r) & update_rp;
-assign LED = ((counter << 1) > delay) ? 1 : 0;
+assign LED = ~(({2'b0, counter} << 2) > delay); //1/4 of period
 
 always @(posedge clk)
 begin
