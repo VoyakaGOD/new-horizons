@@ -108,13 +108,14 @@ plan = None
 with open(code_path, "r") as code_file:
     plan = get_pins_plan(code_file.read())
 
-qsf_lines = [""]
+qsf_lines = []
 with open(qsf_path, "r") as qsf_file:
     for line in qsf_file:
         if line.startswith("set_location_assignment"):
             print("(-)", line[:-1])
             continue
         qsf_lines += [line]
+qsf_lines += ["\n"]
 for item in plan:
     name, array, pins = item
     if array is not None:
